@@ -1,0 +1,59 @@
+<OrchestrationSteps>
+  <OrchestrationStep Order="1" Type="ClaimsExchange">
+    <ClaimsExchanges>
+      <ClaimsExchange Id="ReadFromURL" TechnicalProfileReferenceId="ReadParams-Custom" />
+    </ClaimsExchanges>
+  </OrchestrationStep>
+
+  <OrchestrationStep Order="2" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
+    <Preconditions>
+      <Precondition Type="ClaimsExist" ExecuteStepsIf="true">
+        <Value>inviteEmail</Value> 
+      </Precondition>
+    </Preconditions>
+    <ClaimsProviderSelections>
+      <ClaimsProviderSelection TargetClaimsExchangeId="LocalAccountSigninEmailExchange" />
+    </ClaimsProviderSelections>
+    <ClaimsExchanges>
+      <ClaimsExchange Id="LocalAccountSigninEmailExchange" TechnicalProfileReferenceId="LocalAccountDiscoveryExchange" />
+    </ClaimsExchanges>
+  </OrchestrationStep>
+
+  <OrchestrationStep Order="3" Type="ClaimsExchange">
+    <Preconditions>
+      <Precondition Type="ClaimsExist" ExecuteStepsIf="false">
+        <Value>inviteEmail</Value>
+      </Precondition>
+    </Preconditions>
+    <ClaimsExchanges>
+      <ClaimsExchange Id="LookupUserForInvite" TechnicalProfileReferenceId="AzureActiveDirectory-ReadUser-ByEmail" />
+    </ClaimsExchanges>
+  </OrchestrationStep>
+
+  <OrchestrationStep Order="4" Type="ClaimsExchange">
+    <Preconditions>
+      <Precondition Type="ClaimsExist" ExecuteStepsIf="false">
+        <Value>inviteEmail</Value>
+      </Precondition>
+      <Precondition Type="ClaimsExist" ExecuteStepsIf="true">
+        <Value>objectId</Value>
+      </Precondition>
+    </Preconditions>
+    <ClaimsExchanges>
+      <ClaimsExchange Id="ReadOnlySignUp" TechnicalProfileReferenceId="LocalAccountSignUpWithReadOnlyEmail" />
+    </ClaimsExchanges>
+  </OrchestrationStep>
+
+  <OrchestrationStep Order="5" Type="ClaimsExchange">
+    <Preconditions>
+      <Precondition Type="ClaimsExist" ExecuteStepsIf="false">
+        <Value>objectId</Value>
+      </Precondition>
+    </Preconditions>
+    <ClaimsExchanges>
+      <ClaimsExchange Id="StandardSignIn" TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email" />
+    </ClaimsExchanges>
+  </OrchestrationStep>
+
+  <OrchestrationStep Order="6" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+</OrchestrationSteps>
