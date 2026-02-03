@@ -1,0 +1,19 @@
+<ClaimType Id="newPassword">
+  <DisplayName>New Password</DisplayName>
+  <DataType>string</DataType>
+  <UserInputType>Password</UserInputType>
+  <Restriction>
+    <Pattern RegularExpression="^(?=.{8,16}$)(?:(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])|(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])|(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])|(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).*$"
+             HelpText="8–16 characters; must contain 3 of 4: lowercase, uppercase, number, special character." />
+  </Restriction>
+</ClaimType>
+
+<ClaimType Id="reenterPassword">
+  <DisplayName>Confirm Password</DisplayName>
+  <DataType>string</DataType>
+  <UserInputType>Password</UserInputType>
+  <Restriction>
+    <Pattern RegularExpression="^(?=.{8,16}$)(?:(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])|(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])|(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])|(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).*$"
+             HelpText="8–16 characters; must contain 3 of 4: lowercase, uppercase, number, special character." />
+  </Restriction>
+</ClaimType>
